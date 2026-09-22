@@ -1,0 +1,13 @@
+# dsh-enter-keymap 的 bundle patch。
+#
+# 这是包的 `dsh.bundle.patch` 层：`dsh plugin --profile web add <本包>` 安装时，
+# plugin manager 会把本包名追加进 profile 的 `dsh.profile.bundles`，并把这里的
+# `insert` 合并进 Loader 树，于是无需手工改 profile 的任何文件。
+#
+# 这一行同时挂起两半：
+#   - Node 半（exports "."）在 Host 进程注册设置 namespace `enter-keymap`；
+#   - `dsh.client` 声明让浏览器半（exports "./client"）被投递到 /plugins 并由
+#     Web GUI 加载，负责键位拦截与「设置 → 通用」里的开关行。
+- insert:
+    - id: enter-keymap
+      name: 'dsh-enter-keymap'

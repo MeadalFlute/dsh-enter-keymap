@@ -1,0 +1,8 @@
+# 依赖与运行产物
+node_modules/
+.pnpm-store/
+
+# 本地临时文件
+*.log
+.DS_Store
+Thumbs.db

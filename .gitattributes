@@ -1,0 +1,6 @@
+# 文本文件一律 LF、UTF-8，避免 Windows 上提交出 CRLF 噪音
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.woff2 binary
