@@ -16,7 +16,7 @@
 
 ```sh
 # 从 GitHub 装
-dsh plugin --profile web add github:<user>/dsh-enter-keymap
+dsh plugin --profile web add github:MeadalFlute/dsh-enter-keymap
 
 # 或从 npm 装
 dsh plugin --profile web add dsh-enter-keymap
