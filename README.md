@@ -100,8 +100,11 @@ node test/keymap.test.mjs
   开关仍能在当前页面生效，但刷新后回到默认（已启用），不会写进 `settings.yaml`。
 - Shift+Enter 在「Agent 忙但草稿为空」时，会像 DSH 的 Ctrl+Enter 一样**冲刷队列**（steer 队列里已有消息），
   而不是发送空消息 —— 这是 DSH 原生加速手势的语义，插件刻意保持一致。
-- 验证环境为 DSH `0.1.6-alpha.2`。若 DSH 以后把 Shift+Enter 改成别的语义，或把 `busyEnter` 改成三态，
-  本插件需要同步更新；拦截点全部集中在 `lib/client.js` 的 `routeEnter`，单测可直接覆盖改动。
+- 验证环境为 DSH `0.1.6-alpha.2`。插件依赖三个客户端服务 `slots` / `locale` / `settingsScope`
+  与 `settings.general.item` 槽位；`settingsScope` 是较新版本才有的，更老的 DSH 上设置行不会出现
+  （键位拦截仍会工作）。
+- 若 DSH 以后把 Shift+Enter 改成别的语义，或把 `busyEnter` 改成三态，本插件需要同步更新；
+  拦截点全部集中在 `lib/client.js` 的 `routeEnter`，单测可直接覆盖改动。
 
 ## 本地开发装法
 
