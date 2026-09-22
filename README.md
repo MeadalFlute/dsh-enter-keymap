@@ -1,5 +1,7 @@
 # dsh-enter-keymap
 
+[![ci](https://github.com/MeadalFlute/dsh-enter-keymap/actions/workflows/ci.yml/badge.svg)](https://github.com/MeadalFlute/dsh-enter-keymap/actions/workflows/ci.yml)
+
 给 DSH Web GUI 换一套编写器键位：**Enter 换行 · Ctrl+Enter 发送 · Shift+Enter 插队发送**。
 可在 **设置 → 通用 → 编写器键位** 里随时开关，关掉即刻恢复 DSH 原生键位。
 
@@ -87,6 +89,9 @@ node test/keymap.test.mjs
 开关关闭、非 composer 目标、菜单打开、输入法组合、事件已被处理、非 Enter 键、导出形状），
 外加 6 条文案渲染回归（字典注册、`label` 返回真实文案、设置行渲染不含原始 key、
 说明只有一行不重复、双语 key 一一对应、关闭态文案）。
+
+测试**零依赖**（自带极小断言壳，不需要 `npm install`），所以 CI 只做语法检查 + 跑这个脚本，
+不装依赖也不构建：`lib/` 是手写的产物，仓库里提交什么，装上以后跑的就是什么。
 
 ## 说明与已知限制
 
