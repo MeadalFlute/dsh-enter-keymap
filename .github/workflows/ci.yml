@@ -1,0 +1,37 @@
+# 每次 push / PR 跑一遍语法检查与单测。
+# 测试是零依赖的（自带断言壳，不需要 npm install），所以这个 workflow 故意不装依赖、
+# 不跑构建 —— lib/ 是手写的产物，提交什么就是装上以后跑什么。
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: syntax + unit tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['18', '20', '22']
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Syntax check the shipped entry points
+        run: |
+          node --check lib/client.js
+          node --check lib/index.js
+          node --check scripts/install.mjs
+
+      - name: Unit tests (keymap routing + settings-row rendering)
+        run: node test/keymap.test.mjs
