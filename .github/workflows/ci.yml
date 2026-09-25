@@ -32,6 +32,8 @@ jobs:
           node --check lib/client.js
           node --check lib/index.js
           node --check scripts/install.mjs
+          node --check tools/probe-pi-ai-headers.mjs
+          node --check tools/verify-opencode-session-header.mjs
 
       - name: Unit tests (keymap routing + settings-row rendering)
         run: node test/keymap.test.mjs

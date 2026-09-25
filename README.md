@@ -123,3 +123,20 @@ node scripts/install.mjs --profile web
 ```
 
 测试与源码都在仓库里（npm 包的 `files` 只含 `lib` 与 patch，测试不进包）。
+
+## 附：OpenCode Go 的 session 头（与本插件无关，但顺手留了材料）
+
+同一个作者在排查 **OpenCode Go 要求 `x-opencode-session`** 的问题时做了抓包验证，
+结论与复现脚本一并放在仓库里，跟本插件的键位功能互不影响：
+
+- [`docs/opencode-session-header.md`](docs/opencode-session-header.md) —— 根因（含 pi-ai / dsh-llm
+  的 `file:line` 指针）、为什么静态 `providers.<route>.headers` 不算真修、以及给上游的建议修法。
+- [`tools/probe-pi-ai-headers.mjs`](tools/probe-pi-ai-headers.mjs) —— 5 个场景抓包，验证
+  `model.headers` / `options.headers` / `sessionId` 各自会变成哪些 HTTP 头。
+- [`tools/verify-opencode-session-header.mjs`](tools/verify-opencode-session-header.mjs) ——
+  复刻 adapter 的真实请求构造，跑 `minimax-m3` 的 anthropic 路径。
+
+```sh
+node tools/probe-pi-ai-headers.mjs <pi-ai/dist/index.js>
+node tools/verify-opencode-session-header.mjs <pi-ai/dist/index.js>
+```
