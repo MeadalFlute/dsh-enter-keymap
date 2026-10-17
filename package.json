@@ -38,9 +38,7 @@
     },
     "client": {
       "inject": [
-        "@deepseek-ai/dsh-client-locale",
-        "@deepseek-ai/dsh-client-ui-settings",
-        "@deepseek-ai/dsh-client-ui-slots"
+        "@deepseek-ai/dsh-client-locale"
       ],
       "external": [
         "react"
@@ -48,9 +46,7 @@
       "platform": "web"
     }
   },
-  "dependencies": {
-    "schemastery": "^3.18.0"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "@deepseek-ai/cordis": "^4.0.2"
   },
