@@ -51,9 +51,23 @@ function fail(message) {
   process.exit(1)
 }
 
+/**
+ * Read and parse one JSON file, tolerating a UTF-8 BOM.
+ *
+ * Notepad / PowerShell on Windows happily write `package.json` with a BOM, and a
+ * bare `JSON.parse` then fails with `Unexpected token '\uFEFF'`, which does not
+ * look like a BOM problem at all.
+ *
+ * @param {string} path - File path.
+ * @returns {any} The parsed value.
+ */
+function readJson(path) {
+  return JSON.parse(readFileSync(path, 'utf8').replace(/^\uFEFF/, ''))
+}
+
 if (!existsSync(profileDir)) fail(`profile directory does not exist: ${profileDir}`)
 
-const packageName = JSON.parse(readFileSync(join(pluginDir, 'package.json'), 'utf8')).name
+const packageName = readJson(join(pluginDir, 'package.json')).name
 if (typeof packageName !== 'string' || packageName === '') fail(`no package name in ${pluginDir}/package.json`)
 
 console.log(`plugin:  ${pluginDir}`)
@@ -70,7 +84,7 @@ console.log(`  [1/3] link: ${linkPath} -> ${pluginDir}`)
 
 // 2. package.json: link dependency + profile bundle entry.
 const manifestPath = join(profileDir, 'package.json')
-const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'))
+const manifest = readJson(manifestPath)
 const before = JSON.stringify(manifest)
 manifest.dependencies = manifest.dependencies ?? {}
 manifest.dependencies[packageName] = `link:${pluginDir}`
